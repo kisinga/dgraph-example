@@ -102,6 +102,14 @@ Note that the secondary config file exists because
 Dev enviromnment doesnt run the server within the docker
 container, hence it had to be independent of docker environment
 
+## Testing DGraph using Ratel (Dev Mode Only)
+
+Navigate to http://localhost:8000/?latest on your browser
+paste [this query](/sample/query.graphql)
+You sould get a response similar to [this](/sample/response.png)
+In case you get more than one ID, don't worry. That only means
+your init code ran severally and you have many people named "Alice"
+
 ## Modification
 
 This setup can easily be modified to separate frontend from

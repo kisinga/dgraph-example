@@ -1,0 +1,24 @@
+query Me(){
+	me(func: eq(name ,"Alice")) {
+		name
+		dob
+		age
+		loc
+		raw_bytes
+		married
+		dgraph.type
+		friend{
+			name
+		dob
+		age
+		loc
+		raw_bytes
+		married
+			dgraph.type
+		}
+		school {
+			name
+			dgraph.type
+			}
+		}
+	}

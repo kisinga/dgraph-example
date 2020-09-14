@@ -1,0 +1,29 @@
+[
+  {
+    "uid": "_:alice",
+    "name": "Alice",
+    "dob": "1980-01-01T23:00:00Z",
+    "age": 26,
+    "loc": {
+      "type": "Point",
+      "coordinates": [1.1, 2]
+    },
+    "married": true,
+    "dgraph.type": ["Person"],
+    "friend": [
+      {
+        "name": "Bob",
+        "age": 24
+      },
+      {
+        "name": "Charlie",
+        "age": 29
+      }
+    ],
+    "school": [
+      {
+        "name": "Crown Public School"
+      }
+    ]
+  }
+]
