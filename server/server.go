@@ -23,27 +23,25 @@ func main() {
 	if os.Getenv("prod") == "true" {
 		prod = true
 	}
-	client := newClient(cfg.DBConfig.URI)
-
-	db := db.NewDgraph(client)
+	client, conn := newClient(cfg.DBConfig.URI)
+	defer conn.Close()
+	db := db.NewDgraph(client, cfg.DBConfig.Init)
 	// CORS is enabled only in prod profile
 	app := web.NewApp(db, prod)
 	err = app.Serve()
 	log.Println("Error", err)
 }
-func newClient(url string) *dgo.Dgraph {
+func newClient(url string) (*dgo.Dgraph, *grpc.ClientConn) {
 	// Dial a gRPC connection. The address to dial to can be configured when
 	// setting up the dgraph cluster.
 	dialOpts := append([]grpc.DialOption{},
 		grpc.WithInsecure(),
 		grpc.WithDefaultCallOptions(grpc.UseCompressor(gzip.Name)))
 	d, err := grpc.Dial(url, dialOpts...)
-	defer d.Close()
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	return dgo.NewDgraphClient(
 		api.NewDgraphClient(d),
-	)
+	), d
 }
