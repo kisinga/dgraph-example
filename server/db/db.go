@@ -6,8 +6,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io/ioutil"
 	"log"
-	"time"
+	"os"
 
 	"github.com/dgraph-io/dgo/v2"
 	"github.com/dgraph-io/dgo/v2/protos/api"
@@ -95,36 +96,11 @@ func (d DGraph) initDB() error {
 	ctx := context.Background()
 	txn := d.client.NewTxn()
 	defer txn.Discard(ctx)
-
-	dob := time.Date(1980, 01, 01, 23, 0, 0, 0, time.UTC)
-	// While setting an object if a struct has a Uid then its properties in the graph are updated
-	// else a new node is created.
-	// In the example below new nodes for Alice, Bob and Charlie and school are created (since they
-	// dont have a Uid).
-	alice := model.Person{
-		UID:     "_:alice",
-		Name:    "Alice",
-		DType:   []string{"Person"},
-		Age:     26,
-		Married: true,
-		Location: model.Loc{
-			Type:   "Point",
-			Coords: []float64{1.1, 2},
-		},
-		Dob: &dob,
-		Raw: []byte("raw_bytes"),
-		Friends: []model.Person{{
-			Name: "Bob",
-			Age:  24,
-		}, {
-			Name: "Charlie",
-			Age:  29,
-		}},
-		School: []model.School{{
-			Name: "Crown Public School",
-		}},
+	people, err := parsePeople()
+	if err != nil {
+		return err
 	}
-	pb, err := json.Marshal(alice)
+	pb, err := json.Marshal(people)
 	if err != nil {
 		return err
 	}
@@ -183,4 +159,37 @@ func (d DGraph) initDB() error {
 }
 func (d DGraph) GetUsers() ([]*model.Person, error) {
 	return nil, errors.New("Not implemented")
+}
+
+func parsePeople() ([]model.Person, error) {
+	// Open our jsonFile
+	jsonFile, err := os.Open("../sample/people.json")
+	// if we os.Open returns an error then handle it
+	if err != nil {
+		return nil, err
+	}
+	fmt.Println("Successfully Opened users.json")
+	// defer the closing of our jsonFile so that we can parse it later on
+	defer jsonFile.Close()
+
+	byteValue, err := ioutil.ReadAll(jsonFile)
+	if err != nil {
+		return nil, err
+	}
+	// we initialize our Users array
+	var people []model.Person
+
+	// we unmarshal our byteArray which contains our
+	// jsonFile's content into 'users' which we defined above
+
+	//This is probably unecessary but helps catch any
+	//parsing errors within the json before values are sent over
+	//to the database, as well as allow initialization of missing
+	//fields with their nil values
+	err = json.Unmarshal(byteValue, &people)
+
+	if err != nil {
+		return nil, err
+	}
+	return people, nil
 }
