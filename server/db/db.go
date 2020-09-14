@@ -9,8 +9,8 @@ import (
 	"log"
 	"time"
 
-	"github.com/dgraph-io/dgo"
-	"github.com/dgraph-io/dgo/protos/api"
+	"github.com/dgraph-io/dgo/v2"
+	"github.com/dgraph-io/dgo/v2/protos/api"
 )
 
 type DB interface {
@@ -32,9 +32,37 @@ func NewDgraph(client *dgo.Dgraph, init bool) DB {
 	return d
 }
 func (d DGraph) initDB() error {
+	//The code in the official documentation is throwing an error so I
+	//in the meantime I edited out the erroneous lines until I figure out why
 
-	err := d.client.Alter(context.Background(), &api.Operation{
-		Schema: `
+	// s := `
+	// name: string @index(exact) .
+	// age: int .
+	// married: bool .
+	// loc: geo .
+	// dob: datetime .
+
+	// type Person {
+	// 	name
+	// 	age
+	// 	dob
+	// 	married
+	// 	raw
+	// 	friends
+	// 	loc
+	// 	school
+	// }
+
+	// type Loc {
+	// 	type
+	// 	coords
+	// }
+
+	// type Institution {
+	// 	name
+	// }
+	// 	`
+	s := `
 	name: string @index(exact) .
 	age: int .
 	married: bool .
@@ -57,8 +85,9 @@ func (d DGraph) initDB() error {
 
 	type Institution {
 		name
-	}
-		`,
+	}`
+	err := d.client.Alter(context.Background(), &api.Operation{
+		Schema: s,
 	})
 	if err != nil {
 		return err
