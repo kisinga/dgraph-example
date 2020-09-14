@@ -10,6 +10,8 @@ services:
     depends_on:
       - zero
       - server
+    volumes:
+      - ./server/config.yml:/config.yml
   zero:
     image: dgraph/dgraph:v20.03.3
     volumes:

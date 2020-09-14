@@ -1,0 +1,3 @@
+database:
+  uri: "localhost:9080"
+  init: true

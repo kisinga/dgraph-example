@@ -52,9 +52,7 @@ need to prepend it with `sudo` depending on your setup):
 docker-compose -f docker-compose-dev.yml up
 ```
 
-This starts a local DGraph instance on http://localhost:8080`.
-The database will be populated with test records
-from the [init-db.js](init-db.js) file.
+This starts a local DGraph instance on `http://localhost:8080`.
 
 Navigate to the `server` folder and start the back end:
 
@@ -91,11 +89,22 @@ This will build the application and start it together with
 its database. Access the application on http://localhost:3000.
 
 It also starts a local DGraph instance on http://localhost:8080`.
-The database will be populated with test records
-from the [init-db.js](init-db.js) file.
+The database will not be populated with test records.
 Production mode does not expose ratel
+
+## Initialise db with sample data
+
+Edit the boolean value in [config file](server/config.yml)
+to tell the server to initialize the values on launch.
+This needs to happens only once, and leaving it on will
+overwrite the values
+Note that the secondary config file exists because
+Dev enviromnment doesnt run the server within the docker
+container, hence it had to be independent of docker environment
 
 ## Modification
 
 This setup can easily be modified to separate frontend from
-the backend. It is mean
+the backend.
+Modify the [environment variable](webapp/src/environments/environment.ts)
+and replace "apiUrl" with desired value

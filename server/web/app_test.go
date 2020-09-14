@@ -1,34 +1,34 @@
 package web
 
 import (
+	"DGraph-Example/model"
 	"errors"
 	"net/http"
 	"net/http/httptest"
-	"DGraph-Example/model"
 	"testing"
 )
 
 type MockDb struct {
-	tech []*model.Technology
+	user []*model.User
 	err  error
 }
 
-func (m *MockDb) GetTechnologies() ([]*model.Technology, error) {
-	return m.tech, m.err
+func (m *MockDb) GetUsers() ([]*model.User, error) {
+	return m.user, m.err
 }
 
-func TestApp_GetTechnologies(t *testing.T) {
+func TestApp_GetUsers(t *testing.T) {
 	app := App{d: &MockDb{
-		tech: []*model.Technology{
-			{"Tech1", "Details1"},
-			{"Tech2", "Details2"},
+		user: []*model.User{
+			// {"Tech1", "Details1"},
+			// {"Tech2", "Details2"},
 		},
 	}}
 
-	r, _ := http.NewRequest("GET", "/api/technologies", nil)
+	r, _ := http.NewRequest("GET", "/api/users", nil)
 	w := httptest.NewRecorder()
 
-	app.GetTechnologies(w, r)
+	app.GetUsers(w, r)
 
 	if w.Code != http.StatusOK {
 		t.Errorf("handler returned wrong status code: got %v want %v", w.Code, http.StatusOK)
@@ -42,14 +42,14 @@ func TestApp_GetTechnologies(t *testing.T) {
 
 func TestApp_GetTechnologies_WithDBError(t *testing.T) {
 	app := App{d: &MockDb{
-		tech: nil,
+		user: nil,
 		err:  errors.New("unknown error"),
 	}}
 
 	r, _ := http.NewRequest("GET", "/api/technologies", nil)
 	w := httptest.NewRecorder()
 
-	app.GetTechnologies(w, r)
+	app.GetUsers(w, r)
 
 	if w.Code != http.StatusInternalServerError {
 		t.Errorf("handler returned wrong status code: got %v want %v", w.Code, http.StatusOK)
