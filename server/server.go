@@ -1,6 +1,7 @@
 package main
 
 import (
+	"DGraph-Example/config"
 	"DGraph-Example/db"
 	"DGraph-Example/web"
 	"log"
@@ -15,17 +16,19 @@ import (
 var prod bool = false
 
 func main() {
-
+	cfg, err := config.ReadYaml("config.yml")
+	if err != nil {
+		log.Fatal(err)
+	}
 	if os.Getenv("prod") == "true" {
 		prod = true
 	}
-	client := newClient("localhost:9080")
+	client := newClient(cfg.DBConfig.URI)
 
 	db := db.NewDgraph(client)
 	// CORS is enabled only in prod profile
-	cors := os.Getenv("prod") != "true"
-	app := web.NewApp(db, cors)
-	err := app.Serve()
+	app := web.NewApp(db, prod)
+	err = app.Serve()
 	log.Println("Error", err)
 }
 func newClient(url string) *dgo.Dgraph {
