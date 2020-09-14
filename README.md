@@ -98,4 +98,6 @@ Production mode does not expose ratel
 ## Modification
 
 This setup can easily be modified to separate frontend from
-the backend. It is mean
+the backend.
+Modify the [environment variable](webapp/src/environments/environment.ts)
+and replace "apiUrl" with desired value
