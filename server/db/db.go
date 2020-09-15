@@ -7,7 +7,6 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"os"
 
 	"github.com/dgraph-io/dgo/v2"
@@ -22,16 +21,22 @@ type DGraph struct {
 	client *dgo.Dgraph
 }
 
-func NewDgraph(client *dgo.Dgraph, init bool) DB {
+func NewDgraph(client *dgo.Dgraph) DB {
 	d := DGraph{client: client}
-	if init {
-		err := d.initDB()
-		if err != nil {
-			log.Fatal(err)
-		}
-	}
+	// if init {
+	// 	err := d.initDB()
+	// 	if err != nil {
+	// 		log.Fatal(err)
+	// 	}
+	// }
 	return d
 }
+
+//@deprecated
+//I decided to leave this here since it demostrates how to
+//perform some CRUD operation, so it might be useful
+//Otherwise, this code is not useful since initialization
+//with data is no longer handled within the app
 func (d DGraph) initDB() error {
 	//The code in the official documentation is throwing an error so I
 	//in the meantime I edited out the erroneous lines until I figure out why

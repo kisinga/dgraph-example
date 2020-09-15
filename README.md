@@ -1,6 +1,12 @@
 # DGraph-Example
 
 This is a simple repository that demonstrates DGraph usage in golang
+The main structure was generated using [Goxygen](https://github.com/shpota/goxygen)
+Queries an dgeneral db functionality was improved using
+[dgman (DGraph Schema Manager)](https://github.com/dolan-in/dgman)
+As much as my natural intuition was to stay away from 3rd party libs as much as possible,
+this functionlity provides features that are so core that
+I feel need for them to be re enforced.
 
 ## Environment setup
 
@@ -94,13 +100,33 @@ Production mode does not expose ratel
 
 ## Initialise db with sample data
 
-Edit the boolean value in [config file](server/config.yml)
-to tell the server to initialize the values on launch.
-This needs to happens only once, and leaving it on will
-overwrite the values
-Note that the secondary config file exists because
-Dev enviromnment doesnt run the server within the docker
-container, hence it had to be independent of docker environment
+open http://localhost:8000/?latest and navigate to the console
+paste the query in [this file](sample/init.txt) and run it. Run the schema mutation
+using the run button and then load the dataset into Dgraph
+
+With the server already running (can be either prod or dev),
+open terminal and execute the following command
+
+```sh
+docker ps
+```
+
+This will give you a list of docker images running. Note the
+id assigned to `dgraph zero`
+In the attached screenshot it's `39ebdf707ae8`
+![docker_ps](sample/docker_ps.png)
+Run the command
+
+```sh
+ docker exec -it <process Id> dgraph live -f /1million.rdf.gz --alpha alpha:9080 --zero zero:5080 -c 1
+```
+
+replacing `<process Id>` with the id attained above
+There’s around one million triples in the dataset. Dgraph reports
+back exactly how many triples were loaded and how long it took.
+
+It’s a big database of movies, but it won’t trouble Dgraph. It is,
+however, big enough for us to use more complex queries.
 
 ## Testing DGraph using Ratel (Dev Mode Only)
 
