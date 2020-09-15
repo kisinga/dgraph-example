@@ -98,14 +98,14 @@ It also starts a local DGraph instance on http://localhost:8080`.
 The database will not be populated with test records.
 Production mode does not expose ratel
 
-## Initialise db with sample data
+## My app shows no data
 
-open http://localhost:8000/?latest and navigate to the console
-paste the query in [this file](sample/init.txt) and run it. Run the schema mutation
-using the run button and then load the dataset into Dgraph
-
+Glad you made it this far. You need to initialise the db with somne sample data
 With the server already running (can be either prod or dev),
-open terminal and execute the following command
+open http://localhost:8000/?latest and navigate to the schema --> Bulk Edit
+paste the contents from [this file](sample/init.txt) click "Aplly schema"
+
+Open terminal and execute the following command
 
 ```sh
 docker ps
@@ -127,16 +127,19 @@ back exactly how many triples were loaded and how long it took.
 
 It’s a big database of movies, but it won’t trouble Dgraph. It is,
 however, big enough for us to use more complex queries.
+The dataset is downloaded from the [official docs](https://github.com/dgraph-io/tutorial/blob/master/resources/1million.rdf.gz)
 
 ## Testing DGraph using Ratel (Dev Mode Only)
 
 Navigate to http://localhost:8000/?latest on your browser
 paste [this query](/sample/query.graphql)
 You sould get a response similar to ![this](/sample/response.png)
-In case you get more than one ID, don't worry. That only means
-your init code ran severally and you have many people named "Alice"
+Congratulations!!
+You've successfully run a dockerised dgraph and loaded it with millions of datasets
 
-## Modification
+## Ingesting the data
+
+## Development
 
 This setup can easily be modified to separate frontend from
 the backend.
