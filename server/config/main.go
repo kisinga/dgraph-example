@@ -11,9 +11,6 @@ import (
 
 type DatabaseConfig struct {
 	URI string `yaml:"uri"`
-	//This tells the server to initialise the database
-	// with sample data
-	Init bool `yaml:"init"`
 }
 
 //Config This maps the configuration in the yaml file into a struct

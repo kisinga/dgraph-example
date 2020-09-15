@@ -25,7 +25,7 @@ func main() {
 	}
 	client, conn := newClient(cfg.DBConfig.URI)
 	defer conn.Close()
-	db := db.NewDgraph(client, cfg.DBConfig.Init)
+	db := db.NewDgraph(client)
 	// CORS is enabled only in prod profile
 	app := web.NewApp(db, prod)
 	err = app.Serve()
