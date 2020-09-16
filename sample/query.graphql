@@ -1,24 +1,14 @@
-query Me(){
-	me(func: eq(name ,"Alice")) {
-		name
-		dob
-		age
-		loc
-		raw_bytes
-		married
-		dgraph.type
-		friend{
-			name
-		dob
-		age
-		loc
-		raw_bytes
-		married
-			dgraph.type
-		}
-		school {
-			name
-			dgraph.type
-			}
-		}
-	}
+{
+  caro(func: allofterms(name@en, "Marc Caro")) {
+    name@en
+    director.film {
+      name@en
+    }
+  }
+  jeunet(func: allofterms(name@en, "Jean-Pierre Jeunet")) {
+    name@en
+    director.film {
+      name@en
+    }
+  }
+}
