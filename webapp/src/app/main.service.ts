@@ -10,10 +10,18 @@ import { Movie } from "./models/movie";
 export class MainService {
   constructor(private readonly httpClient: HttpClient) {}
 
-  searchMovies(): Observable<Movie[]> {
-    return this.httpClient.get<Movie[]>(`${environment.apiUrl}/api/movies`);
+  searchMovies(phrase: string): Observable<Movie[]> {
+    return this.generalSearch<Movie>(phrase, "actors");
   }
-  searchActors(): Observable<Movie[]> {
-    return this.httpClient.get<Movie[]>(`${environment.apiUrl}/api/actors`);
+  searchActors(phrase: string): Observable<Movie[]> {
+    return this.generalSearch<Movie>(phrase, "actors");
+  }
+  private generalSearch<T>(
+    phrase: string,
+    searchType: string
+  ): Observable<T[]> {
+    return this.httpClient.get<T[]>(`${environment.apiUrl}/api/search`, {
+      params: { phrase, searchType },
+    });
   }
 }
