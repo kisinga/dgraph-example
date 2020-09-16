@@ -1,5 +1,5 @@
 {
-  "name": "DGraph-Example",
+  "name": "dgraph-example",
   "version": "0.1.0",
   "scripts": {
     "ng": "ng",
