@@ -14,7 +14,8 @@ import (
 )
 
 type DB interface {
-	GetUsers() ([]*model.Person, error)
+	SearchActors(phrase string) ([]*model.Person, error)
+	SearchMovies(phrase string) ([]*model.Person, error)
 }
 
 type DGraph struct {
@@ -23,12 +24,6 @@ type DGraph struct {
 
 func NewDgraph(client *dgo.Dgraph) DB {
 	d := DGraph{client: client}
-	// if init {
-	// 	err := d.initDB()
-	// 	if err != nil {
-	// 		log.Fatal(err)
-	// 	}
-	// }
 	return d
 }
 
@@ -162,8 +157,11 @@ func (d DGraph) initDB() error {
 	fmt.Println(string(resp.Json))
 	return nil
 }
-func (d DGraph) GetUsers() ([]*model.Person, error) {
-	return nil, errors.New("Not implemented")
+func (d DGraph) SearchActors(phrase string) ([]*model.Person, error) {
+	return nil, errors.New("SearchActors Not implemented")
+}
+func (d DGraph) SearchMovies(phrase string) ([]*model.Person, error) {
+	return nil, errors.New("SearchMovies Not implemented")
 }
 
 func parsePeople() ([]model.Person, error) {

@@ -12,16 +12,16 @@ type App struct {
 	handlers map[string]http.HandlerFunc
 }
 
-func NewApp(d db.DB, cors bool) App {
+func NewApp(d db.DB, prod bool) App {
 	app := App{
 		d:        d,
 		handlers: make(map[string]http.HandlerFunc),
 	}
-	usersHandler := app.GetUsers
-	if !cors {
-		usersHandler = disableCors(usersHandler)
+	searchHandler := app.Search
+	if !prod {
+		searchHandler = disableCors(searchHandler)
 	}
-	app.handlers["/api/users"] = usersHandler
+	app.handlers["/api/search"] = searchHandler
 	app.handlers["/"] = http.FileServer(http.Dir("/webapp")).ServeHTTP
 	return app
 }
@@ -34,14 +34,32 @@ func (a *App) Serve() error {
 	return http.ListenAndServe(":3000", nil)
 }
 
-func (a *App) GetUsers(w http.ResponseWriter, r *http.Request) {
+func (a *App) Search(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	technologies, err := a.d.GetUsers()
+	searchType := r.URL.Query()["searchtype"]
+	phrase := r.URL.Query()["phrase"]
+	if searchType == nil || phrase == nil {
+		sendErr(w, http.StatusBadRequest, "searchtype and phrase are required")
+		return
+	}
+	var response interface{}
+	var err error
+	switch searchType[0] {
+	case "actors":
+		response, err = a.d.SearchActors(phrase[0])
+		break
+	case "movies":
+		response, err = a.d.SearchMovies(phrase[0])
+		break
+	default:
+		sendErr(w, http.StatusBadRequest, "Invalid searchtype")
+		return
+	}
 	if err != nil {
 		sendErr(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	err = json.NewEncoder(w).Encode(technologies)
+	err = json.NewEncoder(w).Encode(response)
 	if err != nil {
 		sendErr(w, http.StatusInternalServerError, err.Error())
 	}

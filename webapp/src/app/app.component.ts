@@ -7,6 +7,8 @@ import {
 } from "@angular/forms";
 import { PeriodicElement } from "./movies/movies.component";
 import { delay, takeUntil } from "rxjs/operators";
+import { SearchService } from "./search.service";
+import { SearchType, SearchTypeNames, SearchIds } from "./models/search";
 
 @Component({
   selector: "app-root",
@@ -16,20 +18,45 @@ import { delay, takeUntil } from "rxjs/operators";
 export class AppComponent {
   title = "DGraph-Example";
 
-  searchType: string[] = ["Movie Name", "Actor"];
-  searchControl = new FormControl(this.searchType[0], [Validators.required]);
+  searchType: string[] = SearchTypeNames;
+  searchControl = new FormControl(SearchTypeNames[0], [Validators.required]);
   phraseControl = new FormControl("", [Validators.required]);
-  selectedSearchType = this.searchType[0];
+  selectedSearchType: string = SearchTypeNames[0];
   searchForm: FormGroup;
-  constructor(fb: FormBuilder) {
+  constructor(fb: FormBuilder, private search: SearchService) {
     this.searchForm = fb.group({
       search: this.searchControl,
       phrase: this.phraseControl,
     });
     this.searchControl.valueChanges.subscribe((c) => {
       this.selectedSearchType = c;
+      // Reset the phrase when user changes search type
+      this.phraseControl.setValue("");
     });
-    this.phraseControl.valueChanges.pipe(delay(50)).subscribe((c) => {});
+    this.phraseControl.valueChanges.pipe(delay(150)).subscribe((c) => {
+      // Dont search empty string??
+      if (String(c).length < 1) {
+        return;
+      }
+      switch (SearchType[this.selectedSearchType]) {
+        case SearchType["Movie Name"]:
+          search
+            .searchMovies(c)
+            .toPromise()
+            .then((res) => {
+              console.log(res);
+            });
+          break;
+        case SearchType["Actor"]:
+          search
+            .searchActors(c)
+            .toPromise()
+            .then((res) => {
+              console.log(res);
+            });
+          break;
+      }
+    });
   }
 
   ELEMENT_DATA: PeriodicElement[] = [

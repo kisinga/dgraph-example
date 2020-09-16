@@ -7,21 +7,21 @@ import { Movie } from "./models/movie";
 @Injectable({
   providedIn: "root",
 })
-export class MainService {
+export class SearchService {
   constructor(private readonly httpClient: HttpClient) {}
 
   searchMovies(phrase: string): Observable<Movie[]> {
-    return this.generalSearch<Movie>(phrase, "actors");
+    return this.generalSearch<Movie>(phrase, "movies");
   }
   searchActors(phrase: string): Observable<Movie[]> {
     return this.generalSearch<Movie>(phrase, "actors");
   }
   private generalSearch<T>(
     phrase: string,
-    searchType: string
+    searchtype: string
   ): Observable<T[]> {
     return this.httpClient.get<T[]>(`${environment.apiUrl}/api/search`, {
-      params: { phrase, searchType },
+      params: { phrase, searchtype },
     });
   }
 }
