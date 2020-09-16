@@ -1,7 +1,7 @@
 package web
 
 import (
-	"DGraph-Example/db"
+	"dgraph-example/db"
 	"encoding/json"
 	"log"
 	"net/http"

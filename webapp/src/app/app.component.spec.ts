@@ -1,44 +1,41 @@
-import { TestBed, async } from '@angular/core/testing';
-import { AppComponent } from './app.component';
-import { TechComponent } from './tech/tech.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TestBed, async } from "@angular/core/testing";
+import { AppComponent } from "./app.component";
+import { TechComponent } from "./tech/tech.component";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
-describe('AppComponent', () => {
+describe("AppComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        AppComponent,
-        TechComponent
-      ],
-      imports: [
-        HttpClientTestingModule
-      ]
+      declarations: [AppComponent, TechComponent],
+      imports: [HttpClientTestingModule],
     }).compileComponents();
   }));
 
-  it('should create the app', () => {
+  it("should create the app", () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'DGraph-Example'`, () => {
+  it(`should have as title 'dgraph-example'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('DGraph-Example');
+    expect(app.title).toEqual("dgraph-example");
   });
 
-  it('should render title', () => {
+  it("should render title", () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.title').textContent).toContain('DGraph-Example');
+    expect(compiled.querySelector(".title").textContent).toContain(
+      "dgraph-example"
+    );
   });
 
-  it('should render goxygen link', () => {
+  it("should render goxygen link", () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('a').textContent).toContain('goxygen');
+    expect(compiled.querySelector("a").textContent).toContain("goxygen");
   });
 });

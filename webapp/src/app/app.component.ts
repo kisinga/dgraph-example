@@ -16,7 +16,7 @@ import { SearchType, SearchTypeNames, SearchIds } from "./models/search";
   styleUrls: ["./app.component.scss"],
 })
 export class AppComponent {
-  title = "DGraph-Example";
+  title = "dgraph-example";
 
   searchType: string[] = SearchTypeNames;
   searchControl = new FormControl(SearchTypeNames[0], [Validators.required]);

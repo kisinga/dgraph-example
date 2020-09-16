@@ -1,4 +1,4 @@
-# DGraph-Example
+# dgraph-example
 
 This is a simple repository that demonstrates DGraph usage in golang
 The main structure was generated using [Goxygen](https://github.com/shpota/goxygen)
@@ -145,3 +145,7 @@ This setup can easily be modified to separate frontend from
 the backend.
 Modify the [environment variable](webapp/src/environments/environment.ts)
 and replace "apiUrl" with desired value
+
+## Disclaimer
+
+I know I should be writing tests. This is still a WIP

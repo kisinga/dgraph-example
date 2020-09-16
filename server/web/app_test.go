@@ -1,7 +1,7 @@
 package web
 
 import (
-	"DGraph-Example/model"
+	"dgraph-example/model"
 	"errors"
 	"net/http"
 	"net/http/httptest"

@@ -1,14 +1,14 @@
 package main
 
 import (
-	"DGraph-Example/config"
-	"DGraph-Example/db"
-	"DGraph-Example/web"
+	"dgraph-example/config"
+	"dgraph-example/db"
+	"dgraph-example/web"
 	"log"
 	"os"
 
-	"github.com/dgraph-io/dgo/v2"
-	"github.com/dgraph-io/dgo/v2/protos/api"
+	"github.com/dgraph-io/dgo/v200"
+	"github.com/dgraph-io/dgo/v200/protos/api"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/encoding/gzip"
 )
