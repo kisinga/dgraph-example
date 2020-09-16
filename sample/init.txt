@@ -4,7 +4,7 @@ director.film: [uid] @reverse .
 actor.film: [uid] @count .
 genre: [uid] @reverse .
 initial_release_date: dateTime @index(year) .
-name: string @index(exact, term) @lang .
+name: string @index(term, fulltext, trigram) @lang .
 starring: [uid] .
 performance.film: [uid] .
 performance.character_note: string .
