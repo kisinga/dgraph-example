@@ -33,7 +33,7 @@ export class AppComponent {
       // Reset the phrase when user changes search type
       this.phraseControl.setValue("");
     });
-    this.phraseControl.valueChanges.pipe(delay(150)).subscribe((c) => {
+    this.phraseControl.valueChanges.pipe(delay(300)).subscribe((c) => {
       // Dont search empty string??
       if (String(c).length < 1) {
         return;
