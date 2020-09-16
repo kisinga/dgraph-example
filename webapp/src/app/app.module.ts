@@ -2,16 +2,35 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 
 import { AppComponent } from "./app.component";
-import { TechComponent } from "./tech/tech.component";
 import { HttpClientModule } from "@angular/common/http";
 import { MoviesComponent } from "./movies/movies.component";
 import { ActorsComponent } from "./actors/actors.component";
-import { MatSlideToggleModule } from "@angular/material/slide-toggle";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSelectModule } from "@angular/material/select";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatCardModule } from "@angular/material/card";
+import { MatButtonModule } from "@angular/material/button";
+import { MatTableModule } from "@angular/material/table";
+import { MatIconModule } from "@angular/material/icon";
 
 @NgModule({
-  declarations: [AppComponent, TechComponent, MoviesComponent, ActorsComponent],
-  imports: [BrowserModule, HttpClientModule, MatSlideToggleModule, BrowserAnimationsModule],
+  declarations: [AppComponent, MoviesComponent, ActorsComponent],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    MatSelectModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    BrowserAnimationsModule,
+    MatCardModule,
+    MatButtonModule,
+    MatTableModule,
+    MatIconModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

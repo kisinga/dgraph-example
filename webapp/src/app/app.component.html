@@ -4,8 +4,39 @@
     <img src="assets/logo.svg" height="150px" alt="logo" />
   </div>
   <div>
-    <mat-slide-toggle>Slide me!</mat-slide-toggle>
-
-    <app-movies></app-movies>
+    <mat-card>
+      <form [formGroup]="searchForm">
+        <mat-form-field appearance="outline">
+          <mat-label>Search By</mat-label>
+          <mat-select formControlName="search">
+            <mat-option *ngFor="let type of searchType" [value]="type">
+              {{ type }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Search {{ selectedSearchType }}</mat-label>
+          <input matInput formControlName="phrase" />
+        </mat-form-field>
+        <!-- <button
+          mat-mini-fab
+          color="primary"
+          type="submit"
+          aria-label="Search button"
+        >
+          <mat-icon>search</mat-icon>
+        </button> -->
+      </form>
+    </mat-card>
+    <div [ngSwitch]="selectedSearchType">
+      <app-movies
+        *ngSwitchCase="searchType[0]"
+        [movies]="ELEMENT_DATA"
+      ></app-movies>
+      <app-actors
+        *ngSwitchCase="searchType[1]"
+        [movies]="ELEMENT_DATA"
+      ></app-actors>
+    </div>
   </div>
 </div>
