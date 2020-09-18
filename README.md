@@ -2,11 +2,6 @@
 
 This is a simple repository that demonstrates DGraph usage in golang
 The main structure was generated using [Goxygen](https://github.com/shpota/goxygen)
-Queries an dgeneral db functionality was improved using
-[dgman (DGraph Schema Manager)](https://github.com/dolan-in/dgman)
-As much as my natural intuition was to stay away from 3rd party libs as much as possible,
-this functionlity provides features that are so core that
-I feel need for them to be re enforced.
 
 ## Environment setup
 
@@ -111,17 +106,17 @@ Open terminal and execute the following command
 docker ps
 ```
 
-This will give you a list of docker images running. Note the
+This will give you a list of docker containers running. Note the
 id assigned to `dgraph zero`
 In the attached screenshot it's `39ebdf707ae8`
 ![docker_ps](sample/docker_ps.png)
 Run the command
 
 ```sh
- docker exec -it <process Id> dgraph live -f /1million.rdf.gz --alpha alpha:9080 --zero zero:5080 -c 1
+docker exec -it <container_Id> dgraph live -f /1million.rdf.gz --alpha alpha:9080 --zero zero:5080 -c 1
 ```
 
-replacing `<process Id>` with the id attained above
+replacing `<container Id>` with the id attained above
 There’s around one million triples in the dataset. Dgraph reports
 back exactly how many triples were loaded and how long it took.
 

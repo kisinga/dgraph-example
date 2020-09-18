@@ -32,10 +32,12 @@
       <app-movies
         *ngSwitchCase="searchType[0]"
         [movies]="ELEMENT_DATA"
+        [loading]="loading"
       ></app-movies>
       <app-actors
         *ngSwitchCase="searchType[1]"
         [movies]="ELEMENT_DATA"
+        [loading]="loading"
       ></app-actors>
     </div>
   </div>

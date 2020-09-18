@@ -14,7 +14,7 @@ import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from "@angular/material/button";
 import { MatTableModule } from "@angular/material/table";
 import { MatIconModule } from "@angular/material/icon";
-
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 @NgModule({
   declarations: [AppComponent, MoviesComponent, ActorsComponent],
   imports: [
@@ -30,6 +30,7 @@ import { MatIconModule } from "@angular/material/icon";
     MatButtonModule,
     MatTableModule,
     MatIconModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

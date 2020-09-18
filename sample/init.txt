@@ -1,15 +1,15 @@
 # Define Directives and index
 
-director.film: [uid] @reverse .
-actor.film: [uid] @count .
+director.film: [uid]  @count @reverse .
+actor.film: [uid] @count @reverse .
 genre: [uid] @reverse .
 initial_release_date: dateTime @index(year) .
 name: string @index(term, fulltext, trigram) @lang .
-starring: [uid] .
-performance.film: [uid] .
+starring: [uid] @count @reverse .
+performance.film: [uid] @count @reverse.
 performance.character_note: string .
 performance.character: [uid] .
-performance.actor: [uid] .
+performance.actor: [uid] @reverse .
 performance.special_performance_type: [uid] .
 type: [uid] .
 

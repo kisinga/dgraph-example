@@ -32,6 +32,8 @@ import { PeriodicElement } from "../movies/movies.component";
 export class ActorsComponent implements OnInit {
   @Input() movies: PeriodicElement;
   @Input() phrase: string;
+  @Input() loading: boolean;
+
   columnsToDisplay = ["name", "weight", "symbol", "position"];
   expandedElement: PeriodicElement | null;
   constructor() {}
