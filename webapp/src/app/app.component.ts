@@ -6,7 +6,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { PeriodicElement } from "./movies/movies.component";
-import { delay, takeUntil } from "rxjs/operators";
+import { delay, debounceTime } from "rxjs/operators";
 import { SearchService } from "./search.service";
 import { SearchType, SearchTypeNames, SearchIds } from "./models/search";
 
@@ -22,6 +22,7 @@ export class AppComponent {
   searchControl = new FormControl(SearchTypeNames[0], [Validators.required]);
   phraseControl = new FormControl("", [Validators.required]);
   selectedSearchType: string = SearchTypeNames[0];
+  loading: boolean;
   searchForm: FormGroup;
   constructor(fb: FormBuilder, private search: SearchService) {
     this.searchForm = fb.group({
@@ -33,18 +34,25 @@ export class AppComponent {
       // Reset the phrase when user changes search type
       this.phraseControl.setValue("");
     });
-    this.phraseControl.valueChanges.pipe(delay(300)).subscribe((c) => {
+    this.phraseControl.valueChanges.pipe(debounceTime(500)).subscribe((c) => {
       // Dont search empty string??
       if (String(c).length < 1) {
         return;
       }
+      // Set the loading indicator
+      this.loading = true;
+
       switch (SearchType[this.selectedSearchType]) {
         case SearchType["Movie Name"]:
           search
             .searchMovies(c)
             .toPromise()
             .then((res) => {
+              this.loading = false;
               console.log(res);
+            })
+            .catch((e) => {
+              this.loading = false;
             });
           break;
         case SearchType["Actor"]:
@@ -52,7 +60,11 @@ export class AppComponent {
             .searchActors(c)
             .toPromise()
             .then((res) => {
+              this.loading = false;
               console.log(res);
+            })
+            .catch((e) => {
+              this.loading = false;
             });
           break;
       }

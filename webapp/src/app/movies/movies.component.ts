@@ -37,6 +37,7 @@ export interface PeriodicElement {
 })
 export class MoviesComponent implements OnInit {
   @Input() movies: PeriodicElement;
+  @Input() loading: boolean;
   @Input() phrase: string;
 
   columnsToDisplay = ["name", "weight", "symbol", "position"];

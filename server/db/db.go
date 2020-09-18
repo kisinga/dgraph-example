@@ -2,7 +2,6 @@ package db
 
 import (
 	"dgraph-example/model"
-	"errors"
 
 	"github.com/dgraph-io/dgo/v200"
 	"github.com/dolan-in/dgman"
@@ -23,7 +22,25 @@ func NewDgraph(client *dgo.Dgraph) DB {
 }
 
 func (d DGraph) SearchActors(phrase string) ([]*model.Person, error) {
-	return nil, errors.New("SearchActors Not implemented")
+
+	tx := dgman.NewReadOnlyTxn(d.client)
+
+	actors := []*model.Person{}
+
+	// regex := "regexp(name@en, /.*" + phrase + ".*/i) @cascade"
+	// get node with node type `user` that matches filter
+	err := tx.Get(&actors).
+		Filter("has(actor.film)"). // dgraph filter
+		// Filter(regex).        // dgraph filter
+		All(6). // returns all predicates, expand on 1 level of edge predicates
+		First(100).
+		Nodes() // get single node from query
+	if err != nil {
+		if err == dgman.ErrNodeNotFound {
+			return []*model.Person{}, err
+		}
+	}
+	return actors, nil
 }
 func (d DGraph) SearchMovies(phrase string) ([]*model.Movie, error) {
 
@@ -31,15 +48,17 @@ func (d DGraph) SearchMovies(phrase string) ([]*model.Movie, error) {
 
 	movies := []*model.Movie{}
 
-	regex := "regexp(name@en, /.*" + phrase + "*/i)"
+	regex := "regexp(name@en, /.*" + phrase + ".*/i)"
 	// get node with node type `user` that matches filter
 	err := tx.Get(&movies).
+		// Filter("has(genre)"). // dgraph filter
 		Filter(regex). // dgraph filter
-		All(1).        // returns all predicates, expand on 1 level of edge predicates
-		Nodes()        // get single node from query
+		All(6).        // returns all predicates, expand on 1 level of edge predicates
+		First(100).
+		Nodes() // get single node from query
 	if err != nil {
 		if err == dgman.ErrNodeNotFound {
-			return []*model.Movie{}, nil
+			return []*model.Movie{}, err
 		}
 	}
 	return movies, nil

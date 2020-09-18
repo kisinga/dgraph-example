@@ -44,4 +44,5 @@ func newClient(url string) (*dgo.Dgraph, *grpc.ClientConn) {
 	return dgo.NewDgraphClient(
 		api.NewDgraphClient(d),
 	), d
+
 }
