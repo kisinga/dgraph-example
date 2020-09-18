@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 
 	"github.com/dgraph-io/dgo/v200"
-	"github.com/dolan-in/dgman"
 )
 
 type DB interface {
@@ -77,22 +76,23 @@ func (d DGraph) SearchActors(phrase string) ([]model.Actor, error) {
 }
 func (d DGraph) SearchMovies(phrase string) ([]*model.Movie, error) {
 
-	tx := dgman.NewReadOnlyTxn(d.client)
+	// tx := dgman.NewReadOnlyTxn(d.client)
 
-	movies := []*model.Movie{}
+	// movies := []*model.Movie{}
 
-	regex := "regexp(name@en, /.*" + phrase + ".*/i)"
-	// get node with node type `user` that matches filter
-	err := tx.Get(&movies).
-		// Filter("has(genre)"). // dgraph filter
-		Filter(regex). // dgraph filter
-		All(6).        // returns all predicates, expand on 1 level of edge predicates
-		First(100).
-		Nodes() // get single node from query
-	if err != nil {
-		if err == dgman.ErrNodeNotFound {
-			return []*model.Movie{}, err
-		}
-	}
-	return movies, nil
+	// regex := "regexp(name@en, /.*" + phrase + ".*/i)"
+	// // get node with node type `user` that matches filter
+	// err := tx.Get(&movies).
+	// 	// Filter("has(genre)"). // dgraph filter
+	// 	Filter(regex). // dgraph filter
+	// 	All(6).        // returns all predicates, expand on 1 level of edge predicates
+	// 	First(100).
+	// 	Nodes() // get single node from query
+	// if err != nil {
+	// 	if err == dgman.ErrNodeNotFound {
+	// 		return []*model.Movie{}, err
+	// 	}
+	// }
+	// return movies, nil
+	panic("NOt implemented")
 }

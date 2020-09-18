@@ -2,11 +2,6 @@
 
 This is a simple repository that demonstrates DGraph usage in golang
 The main structure was generated using [Goxygen](https://github.com/shpota/goxygen)
-Queries an dgeneral db functionality was improved using
-[dgman (DGraph Schema Manager)](https://github.com/dolan-in/dgman)
-As much as my natural intuition was to stay away from 3rd party libs as much as possible,
-this functionlity provides features that are so core that
-I feel need for them to be re enforced.
 
 ## Environment setup
 
