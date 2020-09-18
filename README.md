@@ -75,7 +75,7 @@ npm start
 
 The application will be available on http://localhost:3030.
 
-## Start in production mode
+### Start in production mode
 
 In the project directory run the command (you might
 need to prepend it with `sudo` depending on your setup):
@@ -124,7 +124,13 @@ It’s a big database of movies, but it won’t trouble Dgraph. It is,
 however, big enough for us to use more complex queries.
 The dataset is downloaded from the [official docs](https://github.com/dgraph-io/tutorial/blob/master/resources/1million.rdf.gz)
 
-## Testing DGraph using Ratel (Dev Mode Only)
+## Database structure
+
+Disclaimer: This is not a proper ER Diagram (Due to how nodes are different from FK), but it helps explain
+the structure
+![DB](/sample/db.png)
+
+### Testing DGraph using Ratel (Dev Mode Only)
 
 Navigate to http://localhost:8000/?latest on your browser
 paste [this query](/sample/query.graphql)
