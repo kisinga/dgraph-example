@@ -1,1 +1,1 @@
-export interface Person {}
+export interface Actor {}
