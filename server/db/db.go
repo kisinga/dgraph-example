@@ -49,6 +49,10 @@ func (d DGraph) SearchActors(phrase string) ([]model.Actor, error) {
 								uid
 							}
 						}
+						~director.film{
+							name@en
+							uid
+						}
 						initial_release_date
 					}
 				}
