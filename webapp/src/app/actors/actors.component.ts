@@ -6,10 +6,12 @@ import {
   Input,
   ViewChild,
 } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { Actor } from "../models/main";
+import { MoviesComponent } from "../movies/movies.component";
 
 @Component({
   selector: "app-actors",
@@ -27,7 +29,7 @@ export class ActorsComponent implements AfterViewInit, OnChanges {
   @ViewChild(MatSort) sort: MatSort;
 
   columnsToDisplay = ["uid", "name", "length"];
-  constructor() {
+  constructor(private dialog: MatDialog) {
     this.dataSource = new MatTableDataSource();
   }
 
@@ -47,5 +49,16 @@ export class ActorsComponent implements AfterViewInit, OnChanges {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+  openDialog(actor: Actor): void {
+    const dialogRef = this.dialog.open(MoviesComponent, {
+      width: "75%",
+      data: actor.films_acted,
+    });
+
+    // dialogRef.afterClosed().subscribe((result) => {
+    //   console.log("The dialog was closed");
+    //   this.animal = result;
+    // });
   }
 }
