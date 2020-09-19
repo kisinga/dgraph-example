@@ -9,6 +9,7 @@ import { PeriodicElement } from "./movies/movies.component";
 import { delay, debounceTime } from "rxjs/operators";
 import { SearchService } from "./search.service";
 import { SearchType, SearchTypeNames, SearchIds } from "./models/search";
+import { Actor, Film } from "./models/main";
 
 @Component({
   selector: "app-root",
@@ -24,6 +25,8 @@ export class AppComponent {
   selectedSearchType: string = SearchTypeNames[0];
   loading: boolean;
   searchForm: FormGroup;
+  fetchedActors: Array<Actor> = [];
+  fetchedFilms: Array<Film> = [];
   constructor(fb: FormBuilder, private search: SearchService) {
     this.searchForm = fb.group({
       search: this.searchControl,
@@ -44,24 +47,26 @@ export class AppComponent {
 
       switch (SearchType[this.selectedSearchType]) {
         case SearchType["Movie Name"]:
-          search
+          this.search
             .searchMovies(c)
             .toPromise()
             .then((res) => {
               this.loading = false;
               console.log(res);
+              this.fetchedFilms = res;
             })
             .catch((e) => {
               this.loading = false;
             });
           break;
         case SearchType["Actor"]:
-          search
+          this.search
             .searchActors(c)
             .toPromise()
             .then((res) => {
               this.loading = false;
               console.log(res);
+              this.fetchedActors = res;
             })
             .catch((e) => {
               this.loading = false;

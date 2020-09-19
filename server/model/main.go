@@ -92,12 +92,13 @@ type Film struct {
 	Genre       []string       `json:"genre"`
 	ReleaseDate time.Time      `json:"release_date"`
 	Actors      []FlatWithName `json:"actors"`
+	Directors   []FlatWithName `json:"directors"`
 }
 
 // Actor is a flattened form of Person
 //with a direct connection to the movie acted
 type Actor struct {
 	UID        string `json:"uid,omitempty"`
-	FilmsActed []Film `json:"filmsActed" `
+	FilmsActed []Film `json:"films_acted" `
 	Name       string `json:"name"`
 }

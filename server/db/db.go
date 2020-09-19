@@ -32,7 +32,7 @@ func (d DGraph) SearchActors(phrase string) ([]model.Actor, error) {
 	}
 	var q = `
 		{
-			actors(func: regexp(name@en, /.*` + phrase + `*/i) (first: 3)) 
+			actors(func: regexp(name@en, /.*` + phrase + `.*/i), first: 100)
 			@filter(has(actor.film)) @cascade{
 				uid
 				name@en
@@ -94,5 +94,5 @@ func (d DGraph) SearchMovies(phrase string) ([]*model.Movie, error) {
 	// 	}
 	// }
 	// return movies, nil
-	panic("NOt implemented")
+	panic("NOt implemente")
 }

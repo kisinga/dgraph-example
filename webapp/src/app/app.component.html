@@ -31,12 +31,12 @@
     <div [ngSwitch]="selectedSearchType">
       <app-movies
         *ngSwitchCase="searchType[0]"
-        [movies]="ELEMENT_DATA"
+        [films]="fetchedFilms"
         [loading]="loading"
       ></app-movies>
       <app-actors
         *ngSwitchCase="searchType[1]"
-        [movies]="ELEMENT_DATA"
+        [actors]="fetchedActors"
         [loading]="loading"
       ></app-actors>
     </div>

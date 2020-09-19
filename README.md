@@ -140,6 +140,10 @@ You've successfully run a dockerised dgraph and loaded it with millions of datas
 
 ## Ingesting the data
 
+### Search Actors
+
+![search_Actors](/sample/search_actors.gif)
+
 ## Development
 
 This setup can easily be modified to separate frontend from
