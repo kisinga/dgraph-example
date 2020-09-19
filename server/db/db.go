@@ -10,7 +10,7 @@ import (
 
 type DB interface {
 	SearchActors(phrase string) ([]model.Actor, error)
-	SearchMovies(phrase string) ([]*model.Movie, error)
+	SearchMovies(phrase string) ([]model.Film, error)
 }
 
 type DGraph struct {
@@ -22,7 +22,7 @@ func NewDgraph(client *dgo.Dgraph) DB {
 	return d
 }
 
-//SearchActors returns a list of whose name matches the provided phrase
+//SearchActors returns a list of actors whose name matches the provided phrase
 //Together with the other actors that acted each respective movie
 func (d DGraph) SearchActors(phrase string) ([]model.Actor, error) {
 	txn := d.client.NewTxn()
@@ -33,6 +33,9 @@ func (d DGraph) SearchActors(phrase string) ([]model.Actor, error) {
 	var q = `
 		{
 			actors(func: regexp(name@en, /.*` + phrase + `.*/i), first: 100)
+
+			##remove results that are not actors
+
 			@filter(has(actor.film)) @cascade{
 				uid
 				name@en
@@ -49,7 +52,14 @@ func (d DGraph) SearchActors(phrase string) ([]model.Actor, error) {
 								uid
 							}
 						}
-						initial_release_date
+
+						## Traverse the director node in reverse
+
+						~director.film{
+							name@en
+							uid
+						}
+						
 					}
 				}
 			}
@@ -74,25 +84,54 @@ func (d DGraph) SearchActors(phrase string) ([]model.Actor, error) {
 
 	return actors, nil
 }
-func (d DGraph) SearchMovies(phrase string) ([]*model.Movie, error) {
 
-	// tx := dgman.NewReadOnlyTxn(d.client)
+//SearchMovies returns a list of movies whose name matches the provided phrase
+func (d DGraph) SearchMovies(phrase string) ([]model.Film, error) {
 
-	// movies := []*model.Movie{}
+	txn := d.client.NewTxn()
 
-	// regex := "regexp(name@en, /.*" + phrase + ".*/i)"
-	// // get node with node type `user` that matches filter
-	// err := tx.Get(&movies).
-	// 	// Filter("has(genre)"). // dgraph filter
-	// 	Filter(regex). // dgraph filter
-	// 	All(6).        // returns all predicates, expand on 1 level of edge predicates
-	// 	First(100).
-	// 	Nodes() // get single node from query
-	// if err != nil {
-	// 	if err == dgman.ErrNodeNotFound {
-	// 		return []*model.Movie{}, err
-	// 	}
-	// }
-	// return movies, nil
-	panic("NOt implemente")
+	var result struct {
+		Movies []model.Movie
+	}
+	var q = `
+		{
+			movies(func: regexp(name@en, /.*` + phrase + `.*/i), first: 100)
+			## remove results that are not movies
+			@filter(has(genre)) @cascade{
+				uid
+				name@en
+				genre{
+					name@en
+				}
+				initial_release_date
+				starring{
+					performance.actor{
+							name@en
+							uid
+						}
+				}
+				~director.film{
+					name@en
+					uid
+				}
+			}
+		}
+	`
+	resp, err := txn.Query(context.Background(), q)
+
+	if err != nil {
+		return []model.Film{}, err
+	}
+	if err := json.Unmarshal(resp.GetJson(), &result); err != nil {
+		return []model.Film{}, err
+	}
+	films := func() []model.Film {
+		films := []model.Film{}
+		for _, movie := range result.Movies {
+			films = append(films, *movie.ConvertFilm())
+		}
+		return films
+	}()
+
+	return films, nil
 }

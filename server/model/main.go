@@ -8,6 +8,7 @@ type Movie struct {
 	Genre               []Genre       `json:"genre"`
 	InitialRelreaseDate time.Time     `json:"initial_release_date"`
 	Starring            []Performance `json:"starring"`
+	Directors           []Person      `json:"~director.film"`
 }
 
 type Performance struct {
@@ -75,6 +76,16 @@ func (m Movie) ConvertFilm() *Film {
 				}
 			}
 			return actors
+		}(),
+		Directors: func() []FlatWithName {
+			directors := []FlatWithName{}
+			for _, director := range m.Directors {
+				directors = append(directors, FlatWithName{
+					Name: director.Name,
+					UID:  director.UID,
+				})
+			}
+			return directors
 		}(),
 	}
 }

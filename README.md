@@ -140,9 +140,7 @@ You've successfully run a dockerised dgraph and loaded it with millions of datas
 
 ## Ingesting the data
 
-### Search Actors
-
-![search_Actors](/sample/search_actors.gif)
+![action](/sample/action.gif)
 
 ## Development
 

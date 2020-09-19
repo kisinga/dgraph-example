@@ -37,6 +37,7 @@
       <app-actors
         *ngSwitchCase="searchType[1]"
         [actors]="fetchedActors"
+        [root]="true"
         [loading]="loading"
       ></app-actors>
     </div>
