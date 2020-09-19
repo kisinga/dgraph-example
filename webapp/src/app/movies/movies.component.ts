@@ -15,10 +15,15 @@ import {
   OnChanges,
   ViewChild,
 } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
+import { ActorsComponent } from "../actors/actors.component";
 import { Actor, Film } from "../models/main";
 export interface PeriodicElement {
   name: string;
@@ -57,6 +62,7 @@ export class MoviesComponent implements AfterViewInit, OnChanges {
 
   constructor(
     public dialogRef: MatDialogRef<MoviesComponent>,
+    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: Array<Film>
   ) {
     this.dataSource = new MatTableDataSource();
@@ -77,7 +83,12 @@ export class MoviesComponent implements AfterViewInit, OnChanges {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
+  openDialog(film: Film): void {
+    const dialogRef = this.dialog.open(ActorsComponent, {
+      width: "75%",
+      data: film.actors,
+    });
+  }
   ngOnChanges(changes: any) {
     this.dataSource.data = this.films;
   }

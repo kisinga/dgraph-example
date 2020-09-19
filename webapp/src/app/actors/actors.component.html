@@ -41,7 +41,7 @@
     <tr
       mat-row
       *matRowDef="let element; columns: columnsToDisplay"
-      (click)="openDialog(element)"
+      (click)="root ? openDialog(element) : ''"
     ></tr>
 
     <!-- Row shown when there is no matching data. -->

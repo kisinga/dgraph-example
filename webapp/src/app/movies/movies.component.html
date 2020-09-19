@@ -3,7 +3,7 @@
     <mat-spinner *ngIf="loading"></mat-spinner>
   </div>
 
-  <h3 class="title">Actor results</h3>
+  <h3 class="title">Movie results</h3>
 
   <mat-form-field>
     <mat-label>Filter</mat-label>
@@ -47,7 +47,11 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+    <tr
+      mat-row
+      *matRowDef="let element; columns: columnsToDisplay"
+      (click)="openDialog(element)"
+    ></tr>
 
     <!-- Row shown when there is no matching data. -->
     <tr class="mat-row" *matNoDataRow>
