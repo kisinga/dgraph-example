@@ -26,7 +26,7 @@ export class ActorsComponent implements AfterViewInit, OnChanges {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  columnsToDisplay = ["ID", "Actor Name", "Movies Acted"];
+  columnsToDisplay = ["uid", "name", "length"];
   constructor() {
     this.dataSource = new MatTableDataSource();
   }

@@ -29,4 +29,6 @@ table {
 .example-container {
   position: relative;
   min-height: 200px;
+  height: 700px;
+  overflow: auto;
 }
