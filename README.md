@@ -114,7 +114,7 @@ In the attached screenshot it's `39ebdf707ae8`
 Within your project directory run the command
 
 ```sh
-docker exec -it <container_Id> dgraph live -f /1million.rdf.gz --alpha alpha:9080 --zero zero:5080 -c 1
+docker exec -it <container_Id> dgraph live -f /testdata/1million.rdf.gz --alpha alpha:9080 --zero zero:5080 -c 1
 ```
 
 replacing `<container Id>` with the id attained above

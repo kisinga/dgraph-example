@@ -16,7 +16,7 @@ services:
     image: dgraph/dgraph:v20.03.3
     container_name: zero
     volumes:
-      - ./1million.rdf.gz:/1million.rdf.gz
+      - ./testdata/1million.rdf.gz:/1million.rdf.gz
       - type: volume
         source: dgraph
         target: /dgraph
