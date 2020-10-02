@@ -2,6 +2,7 @@
 
 This is a simple repository that demonstrates DGraph usage in golang
 The main structure was generated using [Goxygen](https://github.com/shpota/goxygen)
+If you're not familiar with docker commands, [this](https://docker-curriculum.com) is a good place to start
 
 ## Environment setup
 
@@ -33,8 +34,8 @@ outside this docker container, modify the following files:
 
 1. docker-compose.yml comment out the code that adds dgraph to
    the current environment and bundles it with the app
-2. config.yml hold the dgraph config url. Modify the url
-   according to your specific setup
+2. prod and dev db urls are currelty hard-coded into the app. Modify
+   them to your needs
 
 ## Start in development mode
 
@@ -110,7 +111,7 @@ This will give you a list of docker containers running. Note the
 id assigned to `dgraph zero`
 In the attached screenshot it's `39ebdf707ae8`
 ![docker_ps](sample/docker_ps.png)
-Run the command
+Within your project directory run the command
 
 ```sh
 docker exec -it <container_Id> dgraph live -f /1million.rdf.gz --alpha alpha:9080 --zero zero:5080 -c 1

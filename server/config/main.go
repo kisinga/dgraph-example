@@ -10,7 +10,8 @@ import (
 )
 
 type DatabaseConfig struct {
-	URI string `yaml:"uri"`
+	Dev  string `yaml:"dev"`
+	Prod string `yaml:"prod"`
 }
 
 //Config This maps the configuration in the yaml file into a struct

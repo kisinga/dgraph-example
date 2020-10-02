@@ -27,7 +27,7 @@ services:
       - 9080:9080
     restart: on-failure
     # Start with 4096 in order to handle bigger dataset
-    command: dgraph alpha --my=alpha:7080 --lru_mb=4096 --zero=zero:5080
+    command: dgraph alpha --my=alpha:9080 --lru_mb=4096 --zero=zero:5080
   ratel:
     image: dgraph/dgraph:v20.03.3
     volumes:

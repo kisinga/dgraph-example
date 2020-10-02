@@ -9,11 +9,12 @@ services:
       prod: "true"
     depends_on:
       - zero
-      - server
+      - alpha
     volumes:
       - ./server/config.yml:/config.yml
   zero:
     image: dgraph/dgraph:v20.03.3
+    container_name: zero
     volumes:
       - ./1million.rdf.gz:/1million.rdf.gz
       - type: volume
@@ -26,8 +27,9 @@ services:
       - 6080:6080
     restart: on-failure
     command: dgraph zero --my=zero:5080
-  server:
+  alpha:
     image: dgraph/dgraph:v20.03.3
+    container_name: alpha
     volumes:
       - type: volume
         source: dgraph
@@ -38,7 +40,8 @@ services:
       - 8080:8080
       - 9080:9080
     restart: on-failure
-    command: dgraph alpha --my=server:7080 --lru_mb=2048 --zero=zero:5080
+    # Start with 4096 in order to handle bigger dataset
+    command: dgraph alpha --my=alpha:7080 --lru_mb=4096 --zero=zero:5080
 volumes:
   dgraph:
   app:

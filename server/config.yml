@@ -1,2 +1,3 @@
 database:
-  uri: "localhost:9080"
+  dev: "localhost:9080"
+  prod: "alpha:9080"
